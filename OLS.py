@@ -379,7 +379,7 @@ class OLS:
         acf_stats = {}
         for lag in range(1, lags + 1):
             ols = OLS(add_intercept=False)
-            ols.fit(X=resids_lagged_arr[lag:, lag - 1], y=resids[lag:], y_mean=0.0)
+            ols.fit(X=resids_lagged_arr[lag:, lag - 1], y=resids_arr[lag:], y_mean=0.0)
             coef_se = ols.beta_var.item() ** (0.5)
             t_stat_lb, t_stat_ub = sp.stats.t.ppf(
                 q=significance_level, df=n_resids - lag
@@ -399,7 +399,7 @@ class OLS:
         pacf_stats = {}
         for lag in range(1, lags + 1):
             ols = OLS(add_intercept=False)
-            ols.fit(X=resids_lagged_arr[lag:, :lag], y=resids[lag:], y_mean=0.0)
+            ols.fit(X=resids_lagged_arr[lag:, :lag], y=resids_arr[lag:], y_mean=0.0)
             coef_se = ols.beta_var[lag - 1].item() ** (0.5)
             t_stat_lb, t_stat_ub = sp.stats.t.ppf(
                 q=significance_level, df=n_resids - lag
